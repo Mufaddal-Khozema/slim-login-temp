@@ -6,11 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="login/">Login</a>
+    <a href="login">Login</a>
     <a href="signup">Signup</a>
-    <script>
-        const as = document.querySelector('a');
-        as.forEach(a => a.addEventListener('click', (e) => e.preventDefault());
-    </script>
 </body>
 </html>
