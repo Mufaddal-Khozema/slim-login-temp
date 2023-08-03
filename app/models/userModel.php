@@ -18,26 +18,35 @@ class UserModel {
         } catch (Exception $e) {
             return $e->getMessage();
         }
-        
-        // return $res;
-        // return json_encode($data);
-        // global $conn;
-        // try {
-        //     $sql = "SELECT * FROM users WHERE email='$email'";
-        //     $results = $conn->query($sql);
-        //     $row = $results->fetch(PDO::FETCH_ASSOC);
-        //     if(is_array($row) && count($row)>0){
-        //         return "Account of this email already exists";
-        //     }else {
-        //         $stmt = $conn->prepare("INSERT INTO users (email, password) VALUE(?,?)");
-        //         $res = $stmt->execute([$email,password_hash($password,PASSWORD_DEFAULT)]);
-        //         if(!$res){
-        //             return "failed to make database entry";
-        //         }
-        //     }
-
-        // } catch (PDOException $e) {
-        //     throw new Exception($e->getMessage());
-        // }
     }
+
+    // $errors = array();
+    // try
+    // {
+    //     $email = checkEmail($_POST['email']);
+    // } catch (Exception $e) 
+    // {
+    //     $errors['emailErr'] = $e->getMessage();
+    // }
+
+    // try
+    // {
+    //     $password = checkPassword($_POST['password']);
+    // } catch (Exception $e)
+    // {
+    //     $errors['passwordErr'] = $e->getMEssage();
+    // }
+
+    // try {
+
+    //     UserController::loginUser($email, $password);
+
+    // } catch(Exception $e){
+    //     $errors["databaseErr"] = $e->getMessage();
+    // }
+    // if(empty($errors)) {
+    //     echo json_encode(array("success" => "true"));
+    // } else {
+    //     echo json_encode($errors); 
+    // }
 }

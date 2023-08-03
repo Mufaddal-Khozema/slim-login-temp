@@ -1,4 +1,4 @@
-import {validateEmail, validatePassword} from './../script.js'
+import {validateEmail, validatePassword} from './script.js'
 Vue.createApp({
     data() {
         return {

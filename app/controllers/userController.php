@@ -36,6 +36,31 @@ class UserController
         return $response->withJson($errors);
     }
 
+    public function login(Request $request, Response $response) {
+        $errors = array();
+        $data = $request->getParsedBody();
+        $email = $data["email"];
+        $password = $data["password"];
+
+        try {
+            $this->email = $this->checkEmail($email);
+        } catch (Exception $e) {
+            $errors['emailErr'] = json_decode($e->getMessage());
+        }
+
+        try {
+            $this->password = $this->checkPassword($password);
+        } catch (Exception $e) {
+            $errors['passwordErr'] = json_decode($e->getMessage());
+        }
+
+        if($this->email && $this->password){
+            $userFactory = new UserModel;
+            $errors["databaseError"] = $userFactory->createUser($this->email, $this->password);
+
+        }
+    }
+
     private function checkEmail(string $email): string
     {
         $email = trim($email);

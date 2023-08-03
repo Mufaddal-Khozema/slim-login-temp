@@ -1,4 +1,4 @@
-import {validateEmail, validatePassword} from './../script.js'
+import {validateEmail, validatePassword, emailValidityError, passwordValidityError} from './script.js'
 Vue.createApp({
     data() {
         return {
@@ -9,7 +9,7 @@ Vue.createApp({
         }
     },
     methods: {
-        async createUser() {
+        async loginUser() {
             try {
                 this.validateEmail(this.email);
             } catch(err) {
@@ -35,9 +35,10 @@ Vue.createApp({
                 } 
             }
         },
-        validateEmail
-        ,
-        validatePassword
+        validateEmail,
+        validatePassword,
+        emailValidityError,
+        passwordValidityError
     }
 }).mount('#app');
 

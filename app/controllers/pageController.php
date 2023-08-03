@@ -14,10 +14,10 @@ class PageController {
     }
 
     public function login(Request $request, Response $response) { 
-        return $this->view->render($response, "Login/login.php"); 
+        return $this->view->render($response, "login.php"); 
     }
 
     public function signup(Request $request, Response $response) { 
-        return $this->view->render($response, "Signup/signup.php");
+        return $this->view->render($response, "signup.php");
     }
 }

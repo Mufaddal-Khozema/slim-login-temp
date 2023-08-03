@@ -39,6 +39,6 @@
         </form>
     </div>
     <script src="https://unpkg.com/vue@3"></script>
-    <script src="app/views/Signup/signup.js" type="module"></script>
+    <script src="public/assets/signup.js" type="module"></script>
 </body>
 </html>
