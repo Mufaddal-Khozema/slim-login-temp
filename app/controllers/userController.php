@@ -2,10 +2,13 @@
 use Slim\Http\Response as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 require_once __DIR__ .'/../models/userModel.php';
+require_once __DIR__ .'/../controllers/pageController.php';
 class UserController 
 {
     private $email;
     private $password;
+    private $router;
+
     public function createUser(Request $request, Response $response) {
         
         $errors = array();
@@ -27,21 +30,31 @@ class UserController
         }
         
         if($this->email && $this->password){
-            $userFactory = new UserModel;
-            $errors["databaseError"] = $userFactory->createUser($this->email, $this->password);
-
+            try {
+                $userFactory = new UserModel;
+                $userFactory->createUser($this->email, $this->password);
+            } catch (PDOException $e) {
+                $errors["databaseError"] = $e->getMessage();
+            } catch (Exception $e) {
+                $errors["databaseError"] = $e->getMessage();
+            }
         }
         
-        // if()
+        if(empty($errors)) {
+            return $response->withJson("success");    
+        }
+
         return $response->withJson($errors);
     }
 
-    public function login(Request $request, Response $response) {
+    public function loginUser(Request $request, Response $response) {
+        
         $errors = array();
         $data = $request->getParsedBody();
         $email = $data["email"];
         $password = $data["password"];
-
+        
+        
         try {
             $this->email = $this->checkEmail($email);
         } catch (Exception $e) {
@@ -55,10 +68,20 @@ class UserController
         }
 
         if($this->email && $this->password){
-            $userFactory = new UserModel;
-            $errors["databaseError"] = $userFactory->createUser($this->email, $this->password);
-
+            try {
+                $userFactory = new UserModel;
+                $userFactory->loginUser($this->email, $this->password);
+            } catch (PDOException $e) {
+                $errors["databaseError"] = $e->getMessage();
+            } catch (Exception $e) {
+                $errors["databaseError"] = $e->getMessage();
+            }
         }
+
+        if(empty($errors)) {
+            return $response->withJson("success");    
+        }
+        return $response->withJson($errors);
     }
 
     private function checkEmail(string $email): string

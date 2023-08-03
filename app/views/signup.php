@@ -1,8 +1,3 @@
-<!-- <script>
-    const email = <?= json_encode($_POST['email'] ?? null) ?>;
-    const password = <?= json_encode($_POST['password'] ?? null) ?>;
-    const cpassword = <?= json_encode($_POST['cpassword'] ?? null) ?>;
-</script> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

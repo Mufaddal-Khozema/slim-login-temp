@@ -30,8 +30,7 @@ Vue.createApp({
                 })
                 const json = await res.json();
                 if(json["success"]) {
-                    console.log("Here");
-                    window.location.href = "views/welcome.php"
+                    window.location.href = "welcome"
                 } 
             }
         },

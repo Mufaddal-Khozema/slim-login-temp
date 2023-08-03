@@ -12,7 +12,7 @@
         {{name}}
         <a href=".">Home</a>
         <a href="signup">Signup</a>
-        <form @submit="loginUser">
+        <form @submit.prevent="loginUser">
             <p>{{emailErr}}</p>
             <label for="emal">Email: </label>
             <br>

@@ -20,4 +20,8 @@ class PageController {
     public function signup(Request $request, Response $response) { 
         return $this->view->render($response, "signup.php");
     }
+
+    public function welcome(Request $request, Response $response) { 
+        return $this->view->render($response, "welcome.php"); 
+    }
 }
