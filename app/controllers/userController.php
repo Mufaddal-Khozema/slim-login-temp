@@ -43,8 +43,7 @@ class UserController
         if(empty($errors)) {
             return $response->withJson("success");    
         }
-
-        return $response->withJson($errors);
+        return $response->withJson(array("error" =>$errors));
     }
 
     public function loginUser(Request $request, Response $response) {
@@ -81,7 +80,7 @@ class UserController
         if(empty($errors)) {
             return $response->withJson("success");    
         }
-        return $response->withJson($errors);
+        return $response->withJson(array("error" =>$errors));
     }
 
     private function checkEmail(string $email): string

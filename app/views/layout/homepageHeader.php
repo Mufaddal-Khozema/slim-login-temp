@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-cover bg-no-repeat h-screen backdrop-blur-sm text-gray-300" style="background-image: url(public/assets/images/landing-page-background.jpg);">
 <nav class="top-0 absolute w-full bg-transparent h-16 p-4 flex justify-between">
         <div class="flex">
             <svg class="inline" xmlns="http://www.w3.org/2000/svg" version="1.0" width="24pt" height="22pt" viewBox="0 0 1280.000000 1112.000000" preserveAspectRatio="xMidYMid meet">
@@ -11,9 +20,11 @@
             <span class="hidden sm:inline font-serif ml-3 h-full flex text-lg items-center text-center">Smart Contractor</span>
           </div>
           <div class="inline flex items-center">
-            <a class="mr-3" href="register.php" >Register</a>
-            <button class="p-1 px-3 mr-3 rounded shadow-md bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-gray-300">
-              <a href="login">Login</a>
-            </button>
+            <a class="mr-3" href="signup" >Register</a>
+            <a href="login">
+                <button class="p-1 px-3 mr-3 rounded shadow-md bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-gray-300">
+                Login
+              </button>
+              </a>
           </div>
     </nav>
