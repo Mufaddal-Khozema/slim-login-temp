@@ -206,7 +206,7 @@
                 <span class="font-bold">
                     Choose a picture
                 </span>
-                <input type="file" accept="image/png, image/gif, image/jpeg, image/jpg"  id="">
+                <input type="file" @change="imageValidityError" accept="image/png, image/gif, image/jpeg, image/jpg" required>
             </div>
             <div id="rememberme"class="w-full flex text-xs justify-between mb-3">
             <div class="w-full flex text-xs mb-3">

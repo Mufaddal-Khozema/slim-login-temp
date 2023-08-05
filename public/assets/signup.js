@@ -1,15 +1,17 @@
-import {emailValidityError, passwordValidityError} from './script.js'
+import {emailValidityError, passwordValidityError, imageValidityError} from './script.js'
 Vue.createApp({
     data() {
         return {
             email: '',
             password: '',
             cpassword: '',
+            profilePic: '',
             err: '',
         }
     },
     methods: {
         async createUser() {
+            console.log(this.profilePic);
             if(this.password !== this.cpassword){
                 this.err = "Passwords do not match"
                 return
@@ -18,6 +20,7 @@ Vue.createApp({
             const formData = new FormData();
             formData.append("email", this.email);
             formData.append("password", this.password);
+            formData.append("profile_picture", this.profilePic);
             const res = await fetch('createUser', {
                 method: 'POST',
                 body: formData
@@ -33,6 +36,7 @@ Vue.createApp({
             console.log(json);
         },
         emailValidityError,
-        passwordValidityError
+        passwordValidityError,
+        imageValidityError
     }
 }).mount('#app');

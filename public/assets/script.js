@@ -23,6 +23,27 @@ export function passwordValidityError(e) {
     else  input.setCustomValidity("");
 }
 
+export function imageValidityError(e) {
+    const input = e.target;
+    if(input.validity.customError){
+        input.setCustomValidity("");
+    }
+    const uploadedImageFile = input.files[0]
+    this.profilePic = uploadedImageFile;
+
+    const uploadedImageType = uploadedImageFile.type;
+    const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+    if(!validImageTypes.includes(uploadedImageType)){
+        input.setCustomValidity('Invalid File Extension');
+    }
+    const uploadedImageSize = uploadedImageFile.size;
+    const uploadedImageSizeLimit = 500000;
+    if(uploadedImageSize > uploadedImageSizeLimit){
+        input.setCustomValidity(`Image too large >${uploadedImageSizeLimit/1000}kb`)
+    }
+    
+}
+
 function checkPatternMismatch(validity) {
     return (
         validity.patternMismatch === true &&

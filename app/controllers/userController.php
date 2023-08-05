@@ -7,6 +7,7 @@ class UserController
 {
     private $email;
     private $password;
+    private $profile_picture;
     private $router;
 
     public function createUser(Request $request, Response $response) {
@@ -29,7 +30,16 @@ class UserController
             $errors['passwordErr'] = json_decode($e->getMessage());
         }
         
-        if($this->email && $this->password){
+        $files = $request->getUploadedFiles();
+        $profile_picture = $files['profile_picture'];
+
+        try {
+            $this->profile_picture = $this->checkImage($profile_picture);
+        } catch (Exception $e) {
+            $errors['imageErr'] = $e->getMessage();
+        }
+        
+        if($this->email && $this->password && $this->profile_picture){
             try {
                 $userFactory = new UserModel;
                 $userFactory->createUser($this->email, $this->password);
@@ -105,7 +115,7 @@ class UserController
                 return $email;
 
             }
-            else throw new Exception('Invalid Email');
+            else throw new Exception(json_encode('Invalid Email'));
         }
     }
 
@@ -144,5 +154,20 @@ class UserController
         if(!empty($errorMsgs)) throw new Exception(json_encode($errorMsgs));
         return $password;
     }
-
+    private function checkImage($profile_picture)
+    {
+        if(!isset($profile_picture)){
+            throw new Exception('No Profile Picture Provided');
+        } else {
+            $targetPath = 'uploads/' . $profile_picture->getClientFileName();
+            $profile_picture->moveTo($targetPath);
+            $profileType = getimagesize($targetPath)['mime'];
+    
+            $validImageTypes = array('image/jpg', 'image/jpeg', 'image/png');
+            if(in_array($profileType, $validImageTypes)){
+                
+            };
+            return $profile_picture;
+        }
+    }
 }
