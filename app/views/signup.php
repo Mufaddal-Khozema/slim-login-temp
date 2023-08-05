@@ -70,12 +70,11 @@
                 <div id="street-address" class="col-span-2 mb-2">
                     <label for="street-adress">Street Address</label>
                     <input
-                    id="street-adress"
-                    type="text"
-                    class="w-full border border-gray-300 p-1 mr-3 rounded bg-transparent"
-                    placeholder="Enter Your Location"
-                    required
-                    />
+                      id="street-adress"
+                      type="text"
+                      class="w-full border border-gray-300 p-1 mr-3 rounded bg-transparent"
+                      placeholder="Enter Your Location"
+                      required/>
                     </div> 
                     <div id="city" class="flex-1 mb-2">
                         <label for="city">City</label>
@@ -207,7 +206,7 @@
                 <span class="font-bold">
                     Choose a picture
                 </span>
-                <input type="file"   id="">
+                <input type="file" accept="image/png, image/gif, image/jpeg, image/jpg"  id="">
             </div>
             <div id="rememberme"class="w-full flex text-xs justify-between mb-3">
             <div class="w-full flex text-xs mb-3">

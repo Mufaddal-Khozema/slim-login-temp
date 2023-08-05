@@ -10,6 +10,10 @@ Vue.createApp({
     },
     methods: {
         async createUser() {
+            if(this.password !== this.cpassword){
+                this.err = "Passwords do not match"
+                return
+            }
             console.log("signing up");
             const formData = new FormData();
             formData.append("email", this.email);

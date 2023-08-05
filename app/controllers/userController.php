@@ -83,6 +83,12 @@ class UserController
         return $response->withJson(array("error" =>$errors));
     }
 
+    public function signupUser(Request $request, Response $response){
+        $data = $request->getParsedBody();
+        $response->getBody()->write(json_encode($data));
+        return $response;
+    }
+
     private function checkEmail(string $email): string
     {
         $email = trim($email);

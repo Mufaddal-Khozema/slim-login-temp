@@ -5,7 +5,7 @@ class UserModel {
     {
         $data = Model::factory('Users')->where("email", $email)->findMany();
         if (!empty($data)){
-            throw new Exception(json_encode($data));
+            throw new Exception("Account Already Exists");
         }else {
             $user = Model::factory('Users')->create();
             $user->createUser($email, $password);
