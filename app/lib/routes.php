@@ -13,5 +13,4 @@ return function (App $app) {
     $app->post('/createUser', "\UserController:createUser"); 
     $app->post('/loginUser', "\UserController:loginUser"); 
     $app->get('/welcome', "\PageController:welcome");
-    $app->post('/signup', 'UserController:signupUser');
 };
