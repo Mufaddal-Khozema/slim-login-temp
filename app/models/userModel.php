@@ -1,13 +1,14 @@
-<?php
-require_once __DIR__ . '/users.php';
+<?php 
+namespace App\Models;
 class UserModel {
     public function createUser(string $email, string $password) 
     {
-        $data = Model::factory('Users')->where("email", $email)->findMany();
+        \Model::$short_table_names = true;
+        $data = \Model::factory('App\Models\Users')->where("email", $email)->findMany();
         if (!empty($data)){
-            throw new Exception("Account Already Exists");
+            throw new \Exception("Account Already Exists");
         }else {
-            $user = Model::factory('Users')->create();
+            $user = \Model::factory('App\Models\Users')->create();
             $user->createUser($email, $password);
             $user->save();
         }
@@ -15,12 +16,12 @@ class UserModel {
 
     public function loginUser(string $email, string $password)
     {
-        $data = Model::factory('Users')->where('email', $email)->findOne();
+        $data = \Model::factory('App\Models\Users')->where('email', $email)->findOne();
         if (empty($data)){
-            throw new Exception("Account Does not Exist");
+            throw new \Exception("Account Does not Exist");
         }else {
             if(!password_verify($password, $data->password)){
-                throw new Exception("Incorrect Password");
+                throw new \Exception("Incorrect Password");
             }
         }
     }

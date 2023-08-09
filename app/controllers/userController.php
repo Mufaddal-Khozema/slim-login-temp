@@ -1,7 +1,9 @@
 <?php 
+namespace App\Controllers;
 use Slim\Http\Response as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-require_once __DIR__ .'/../models/userModel.php';
+require_once __DIR__ .'/../Models/UserModel.php';
+use App\Models\UserModel;
 require_once __DIR__ .'/../controllers/pageController.php';
 class UserController 
 {
@@ -19,13 +21,13 @@ class UserController
 
         try {
             $this->email = $this->checkEmail($email);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errors['emailErr'] = json_decode($e->getMessage());
         }
 
         try {
             $this->password = $this->checkPassword($password);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             
             $errors['passwordErr'] = json_decode($e->getMessage());
         }
@@ -35,7 +37,7 @@ class UserController
 
         try {
             $this->profile_picture = $this->checkImage($profile_picture);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errors['imageErr'] = $e->getMessage();
         }
         
@@ -43,9 +45,9 @@ class UserController
             try {
                 $userFactory = new UserModel;
                 $userFactory->createUser($this->email, $this->password);
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 $errors["databaseError"] = $e->getMessage();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $errors["databaseError"] = $e->getMessage();
             }
         }
@@ -66,13 +68,13 @@ class UserController
         
         try {
             $this->email = $this->checkEmail($email);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errors['emailErr'] = json_decode($e->getMessage());
         }
 
         try {
             $this->password = $this->checkPassword($password);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $errors['passwordErr'] = json_decode($e->getMessage());
         }
 
@@ -80,9 +82,9 @@ class UserController
             try {
                 $userFactory = new UserModel;
                 $userFactory->loginUser($this->email, $this->password);
-            } catch (PDOException $e) {
+            } catch (\PDOException $e) {
                 $errors["databaseError"] = $e->getMessage();
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $errors["databaseError"] = $e->getMessage();
             }
         }
@@ -100,7 +102,7 @@ class UserController
         $email = htmlspecialchars($email);
         if(!$email){
 
-            throw new Exception(json_encode("Email is required"));
+            throw new \Exception(json_encode("Email is required"));
 
         } else {
             
@@ -109,7 +111,7 @@ class UserController
                 return $email;
 
             }
-            else throw new Exception(json_encode('Invalid Email'));
+            else throw new \Exception(json_encode('Invalid Email'));
         }
     }
 
@@ -120,7 +122,7 @@ class UserController
         $password = htmlspecialchars($password);
         if(!$password){
 
-            throw new Exception(json_encode("Password is required"));
+            throw new \Exception(json_encode("Password is required"));
     
         }
         
@@ -145,17 +147,17 @@ class UserController
         if (!preg_match("/^(?=.*(\W|_)).*$/", $password)) {
             array_push($errorMsgs, "Must have a special symbol");
         }
-        if(!empty($errorMsgs)) throw new Exception(json_encode($errorMsgs));
+        if(!empty($errorMsgs)) throw new \Exception(json_encode($errorMsgs));
         return $password;
     }
     private function checkImage($profile_picture)
     {
         if(!isset($profile_picture)){
-            throw new Exception('No Profile Picture Provided');
+            throw new \Exception('No Profile Picture Provided');
         } else {
             $targetPath = 'uploads/' . $profile_picture->getClientFileName();
             $profile_picture->moveTo($targetPath);
-            $profileType = getimagesize($targetPath)['mime'];
+            $profileType = getimagesize($targetPath) ? getimagesize($targetPath)['mime'] :getimagesize($targetPath);
     
             $validImageTypes = array('image/jpg', 'image/jpeg', 'image/png');
             if(in_array($profileType, $validImageTypes)){

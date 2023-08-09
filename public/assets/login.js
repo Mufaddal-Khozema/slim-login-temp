@@ -4,11 +4,18 @@ Vue.createApp({
         return {
             email: '',
             password: '',
-            err: ''
+            emailErr: 'Email is required',
+            passwordErr: 'Password is required',
+            err: '',
+            displayErr: false,
         }
     },
     methods: {
         async loginUser() {
+            this.displayErr = true;
+            if(this.emailErr || this.passwordErr){
+                return
+            }
             const formData = new FormData();
             formData.append("email", this.email);
             formData.append("password", this.password);

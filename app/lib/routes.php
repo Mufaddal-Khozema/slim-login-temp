@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 use Slim\App;
-require_once __DIR__ .'/../controllers/userController.php';
-require_once __DIR__ .'/../controllers/pageController.php';
+use App\Controllers\PageController;
+use App\Controllers\UserController;
 
 $app->setBasePath("/slim-login");
 
 return function (App $app) {
-    $app->get('/', "\PageController:home"); 
-    $app->get('/login', "\PageController:login"); 
-    $app->get('/signup', "\PageController:signup"); 
-    $app->post('/createUser', "\UserController:createUser"); 
-    $app->post('/loginUser', "\UserController:loginUser"); 
-    $app->get('/welcome', "\PageController:welcome");
+    $app->get('/', [PageController::class, 'home']); 
+    $app->get('/login', [PageController::class, 'login']); 
+    $app->get('/signup', [PageController::class, 'signup']); 
+    $app->post('/createUser', [UserController::class, 'createUser']); 
+    $app->post('/loginUser', [UserController::class, 'loginUser']); 
+    $app->get('/welcome', [PageController::class, 'welcome']);
 };
