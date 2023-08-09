@@ -2,9 +2,8 @@
 namespace App\Controllers;
 use Slim\Http\Response as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-require_once __DIR__ .'/../Models/UserModel.php';
 use App\Models\UserModel;
-require_once __DIR__ .'/../controllers/pageController.php';
+use \League\OAuth2\Client\Provider\Facebook;
 class UserController 
 {
     private $email;
@@ -95,6 +94,14 @@ class UserController
         return $response->withJson(array("error" =>$errors));
     }
 
+    public function facebookLogin(Request $request, Response $response){
+        $provider = new Facebook([
+            'clientId' => '1247168906001105',
+            'clientSecret' => '68a7c33119052298ee6bd705cbbc35ce',
+            'redirectUri' => 'http://localhost/facebookOAuth-2/',
+            'graphApiVersion' => 'v2.10'
+        ]);
+    }
     private function checkEmail(string $email): string
     {
         $email = trim($email);

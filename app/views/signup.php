@@ -274,16 +274,16 @@
         <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 dark:text-white dark:bg-gray-900">or</span>
     </div>
       <div class="lg:h-screen md:w-1/2 lg:w-2/5 text-sm lg:text-base w-4/5 lg:pt-24 flex flex-col items-center ">
-        <button class="shadow-md w-3/4 flex p-2 bg-violet-500 h-10 text-white font-semibold rounded mb-3 items-center justify-center hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+        <a href="facebook/login" class="shadow-md w-3/4 flex p-2 bg-violet-500 h-10 text-white font-semibold rounded mb-3 items-center justify-center hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
           >
           <?php require __DIR__ . '/../../public/assets/images/facebook.svg' ?>
           <span>Sign In with Facebook</span>
-        </button>
-        <button class="shadow-md w-3/4 flex p-2 bg-red-500 h-10 text-white font-bold rounded mb-3 flex items-center justify-center hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
+        </a>
+        <a href="google/login" class="shadow-md w-3/4 flex p-2 bg-red-500 h-10 text-white font-bold rounded mb-3 flex items-center justify-center hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
         >
-        <?php require __DIR__ . '/../../public/assets/images/google.svg' ?>
-        <span>Sign In with Google</span>
-    </button>
+          <?php require __DIR__ . '/../../public/assets/images/google.svg' ?>
+          <span>Sign In with Google</span>
+        </a>
 </div>
     </main>
 </div>
