@@ -14,4 +14,5 @@ return function (App $app) {
     $app->post('/loginUser', [UserController::class, 'loginUser']); 
     $app->get('/welcome', [PageController::class, 'welcome']);
     $app->get('/facebook/login', [UserController::class, 'facebookLogin']);
+    $app->get('/facebook/login/callback', [UserController::class, 'facebookLoginCallback']);
 };

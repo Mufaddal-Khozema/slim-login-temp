@@ -1,63 +1,61 @@
-import {
-    cpasswordValidityError,
-    workProvinceValidationErr,    
-    skillValidationError, 
-    tradeValidationError, 
-    zipcodeValidationError, 
-    provinceValidationError, 
-    cityValidationError, 
-    addressValidationError, 
-    mobilenoValidityError, 
-    lnameValidityError, 
-    nameValidityError, 
-    emailValidityError, 
-    passwordValidityError, 
-    imageValidityError
-} from './script.js';
+import {validator} from './script.js';
 
 Vue.createApp({
     data() {
         return {
-            name: '',
-            email: '',
-            password: '',
-            cpassword: '',
+            user: {
+                name: '',
+                lname: '',                
+                email: '',
+                mobileno: '',
+                street_address: '',
+                city: '',
+                province: '',
+                zipcode: '',
+                trade: '',
+                skill: '',
+                work_province: '',                
+                password: '',
+            },
             profilePic: '',
+            cpassword: '',
             err: '',
             displayErrors: false,
-
-            nameErr: 'Name is required',
-            lnameErr: 'Last Name is required',
-            emailErr: 'Email is required',
-            mobilenoErr: 'Mobile No is required',
-            streetAddErr: 'Street Address is required',
-            cityErr: 'City is required',
-            provinceErr: 'Province is required',
-            zipCodeErr: 'Zip Code is required',
-            tradeErr: 'Trade is required',
-            skillErr: 'Skill is required',
-            workProvinceErr: 'This field is required',
-            passwordErr: 'Password is required',
-            cpasswordErr: 'This field is required',
-            imageErr: 'Picture is required'
+            
+            fieldErrors: {
+                nameErr: 'Name is required',
+                lnameErr: 'Last Name is required',
+                emailErr: 'Email is required',
+                mobilenoErr: 'Mobile No is required',
+                streetAddErr: 'Street Address is required',
+                cityErr: 'City is required',
+                provinceErr: 'Province is required',
+                zipCodeErr: 'Zip Code is required',
+                tradeErr: 'Trade is required',
+                skillErr: 'Skill is required',
+                workProvinceErr: 'This field is required',
+                passwordErr: 'Password is required',
+                cpasswordErr: 'This field is required',
+                imageErr: 'Picture is required'
+            }
         }
     },
     methods: {
         async createUser() {
-            this.displayErrors = true;
-            if(this.nameErr || this.lnameErr || this.emailErr || this.mobilenoErr || this.streetAddErr
-                || this.cityErr || this.provinceErr || this.zipCodeErr || this.tradeErr || this.skillErr ||
-                this.workProvinceErr || this.passwordErr || this.cpasswordErr || this.imageErr){
+            console.log('running');
+            if(this.isErrors(this.fieldErrors)){
+                console.log('path 1', this.displayErrors);
+                this.displayErrors = true;
                 return
             }
             if(this.password !== this.cpassword){
+                console.log('path 2');
                 this.err = "Passwords do not match"
                 return
             }
             console.log("signing up");
             const formData = new FormData();
-            formData.append("email", this.email);
-            formData.append("password", this.password);
+            formData.append("user", JSON.stringify(this.user));
             formData.append("profile_picture", this.profilePic);
             const res = await fetch('createUser', {
                 method: 'POST',
@@ -73,19 +71,11 @@ Vue.createApp({
             };
             console.log(json);
         },
-        emailValidityError,
-        passwordValidityError,
-        imageValidityError,
-        nameValidityError,
-        lnameValidityError,
-        mobilenoValidityError,
-        addressValidationError,
-        cityValidationError,
-        provinceValidationError,
-        zipcodeValidationError,
-        tradeValidationError,
-        skillValidationError,
-        workProvinceValidationErr,
-        cpasswordValidityError
+        isErrors(errs) {
+            return (errs.nameErr || errs.lnameErr || errs.emailErr || errs.mobilenoErr || errs.streetAddErr
+                || errs.cityErr || errs.provinceErr || errs.zipCodeErr || errs.tradeErr || errs.skillErr ||
+                errs.workProvinceErr || errs.passwordErr || errs.cpasswordErr || errs.imageErr)
+        },
+        validator,
     }
 }).mount('#app');
