@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .v-enter-active, 
+      .v-leave-active {
+          transition: opacity 0.5s;
+      }
+      .v-enter-from, .v-leave-to {
+          opacity: 0;
+      }
+    </style>
+</head>
+<body id="app" class="w-full h-screen bg-gray-50 text-gray-500">
+<nav class="text-gray-300  w-full bg-gray-900 h-16 p-4 flex justify-between">
+  <a href="/slim-login" class="flex">
+    {% include "public/assets/images/logo.svg" %}
+    <span class="hidden sm:inline font-serif ml-3 h-full flex text-lg items-center text-center">Smart Contractor</span>
+  </a>
+  <div class="inline flex items-center">
+    <a class="mr-3" href="signup" >Register</a>
+    <a href="login" class="p-1 px-3 mr-3 rounded shadow-md bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-gray-`00">Login</a>
+  </div>
+</nav>
+{# <main class="w-full flex justify-center item-center"> #}
+{% block content %}{% endblock %}
+{# </main> #}
+<script src="https://unpkg.com/vue@3"></script>
+{% block script %}{% endblock %}
+</body>
+</html>

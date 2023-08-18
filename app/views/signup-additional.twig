@@ -1,0 +1,349 @@
+{% extends "layout/layout.twig" %}
+{% block content %}
+  <div id="app" class="flex h-full">
+    <main class="xl:w-3/5 2xl:w-4/5 flex p-5 w-full flex-col gap-x-1 items-center justify-center">
+        <section class="2xl:w-[40rem] 2xl:pt-16 md:w-4/5 lg:auto h-full">
+            <div class="flex flex-col w-full items-center justify-center mb-4">
+                <h1 class="text-3xl mb-3 text-gray-800 font-bold">
+                    Completing Your Profile
+                </h1>
+                <p class="text-base">
+                    We need to know a little more about you, to make the experience better for you! 
+                </p>
+            </div>
+            
+            <form @input="displayErrors = false" @submit.prevent="createUser" class=" flex flex-col items-center gap-y-2 text-sm justify-center" method="post">
+                
+                <span v-if="err" class="w-full p-2 bg-red-600 bg-opacity-25 text-yellow-800 text-white rounded mb-3">{{err}}</span>
+
+                {% if user.first_name is not defined and user.last_name is not defined %}
+                <div id="name" class="w-full mb-3">
+                    <label for="first-name" class="text-gray-600 font-bold">Name</label>
+                    <div class="grid grid-cols-2 gap-x-2 placeholder-gray-200">
+                        {% if user.first_name is not defined %} 
+                        <div class="flex">
+                            <input
+                                id="first-name"
+                                name="fname"
+                                type="text"
+                                class="w-full border border-gray-300 p-1 mr-3 rounded bg-transparent"
+                                placeholder="First Name"
+                                v-model="user.name"
+                                value="{{ user.first_name is defined ? user.first_name : '' }}"
+                                @input="validator"
+                            />
+                            <transition>
+                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.nameErr}}</span>
+                            </transition>
+                        </div>
+                        {% endif %}
+                        {% if user.last_name is not defined %} 
+                        <div class="flex">
+                            <input
+                                id="last-name"
+                                name="lname"
+                                type="text"
+                                class="w-full border border-gray-300 p-1 rounded bg-transparent"
+                                placeholder="Last Name"
+                                v-model="user.lname"
+                                value="{{ user.last_name is defined? user.last_name : '' }}"
+                                @input="validator"
+                            />
+                            <transition>
+                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.lnameErr}}</span>
+                            </transition>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <div id="row2" class="w-full md:grid md:grid-cols-2 md:gap-2 mb-3">
+                    {% if user.email is not defined %}
+                    <div id="email" class="placeholder-gray-200 mb-3 md:mb-0 flex-1">
+                        <label for="email" class="text-gray-600 font-bold">Email</label>
+                        <input 
+                            type="text" 
+                            name="email" 
+                            placeholder="Enter your email"
+                            v-model="user.email" 
+                            @input="validator"
+                            value="{{ user.email is defined ? user.email : '' }}"
+                            class="w-full border border-gray-300 p-1 rounded bg-transparent"
+                            />
+                        <transition>
+                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.emailErr}}</span>
+                        </transition>
+                    </div>
+                    {% endif %}
+                    <div id="mobileno" class="placeholder-gray-200 flex-1">
+                        <label for="phone-number" class="text-gray-600 font-bold">Mobile Phone</label>
+                        <div class="w-full flex border border-gray-300 p-1 rounded bg-transparent">
+                        <label class="px-1" for="phoneNumber">
+                        +92
+                        </label>
+                        <input
+                            id="mobileno"
+                            name="mobileno"
+                            type="text"
+                            class="flex-grow bg-transparent focus:outline-none"
+                            placeholder="Phone Number"
+                            v-model="user.mobileno"
+                            @input="validator"
+                            />
+                        </div>
+                        <transition>
+                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.mobilenoErr}}</span>
+                        </transition>
+                    </div>
+                </div>
+
+                <div id="address-form" class="w-full grid-cols-3 mb-3">
+                    <label for="first-name" class="text-gray-600 font-bold">Address</label>
+                    <div id="address" class="w-full md:grid md:grid-cols-2 grid-rows-3 md:gap-x-2 placeholder-gray-200">
+                        <div id="street-address" class="col-span-2 mb-2">
+                            <label for="street-adress">Street Address</label>
+                            <input
+                            id="street-adress"
+                            name="street_address"
+                            type="text"
+                            class="w-full border border-gray-300 p-1 mr-3 rounded bg-transparent"
+                            placeholder="Enter Your Location"
+                            v-model="user.street_address"
+                            @input="validator"
+                            />
+                            <transition>
+                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.streetAddErr}}</span>
+                            </transition>
+                        </div> 
+                        
+                        <div id="city" class="flex-1 mb-2">
+                            <label for="city">City</label>
+                                <input
+                                id="city"
+                                name="city"
+                                type="text"
+                                class="w-full border border-gray-300 p-1 mr-3 rounded bg-transparent"
+                                placeholder="City Name"
+                                v-model="user.city"
+                                @input="validator"
+                                />
+                            <transition>
+                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.cityErr}}</span>
+                            </transition>
+                        </div>
+
+                        <div id="province" class="flex-1 mb-2">
+                            <label for="province">Province</label>
+                            <select
+                                class="w-full border border-gray-300 p-1 rounded bg-transparent"
+                                name="province"
+                                id="province"
+                                v-model="user.province"
+                                @input="validator"
+                            >
+                                <option value=""></option>
+                                <option value="Balochistan">Balochistan</option>
+                                <option value="Khyber Pakhtunkhwa">
+                                    Khyber Pakhtunkhwa
+                                </option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Sindh">Sindh</option>
+                                <option value="Islamabad Capital Territory">
+                                    Islamabad Capital Territory
+                                </option>
+                            </select> 
+                            <transition>
+                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.provinceErr}}</span>
+                            </transition>
+                        </div>
+
+                        <div id="zip-code" class="flex flex-col">
+                            <label for="zip-code">Zip Code</label>
+                            <input
+                            id="zip-code"
+                            name="zipcode"
+                            type="text"
+                            class="w-full border border-gray-300 p-1 rounded bg-transparent"
+                            placeholder="Zip Code"
+                            v-model="user.zipcode"
+                            @input="validator"
+                            />
+                            <transtion>
+                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.zipCodeErr}}</span>
+                            </transtion>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="info" class="w-full grid md:grid-cols-3 text-gray-600 grid-cols-1 gap-y-2 md:gap-y-0 gap-x-2 mb-3">
+                    <div id="trade" class="flex flex-col">
+                        <label for="trade" class="font-bold">Trade</label>
+                        <select 
+                            class="w-full border border-gray-300 p-1 rounded bg-transparent" 
+                            name="trade" 
+                            id="trade"
+                            v-model="user.trade"
+                            @input="validator"
+                        >
+                            <option value=""></option>
+                            <option value="Architect">Architect</option>
+                            <option value="Brick Layer">Brick Layer</option>
+                            <option value="Carpenter">Carpenter</option>
+                            <option value="Electrician">Electrician</option>
+                            <option value="Fence Installer">Fence Installer</option>
+                            <option value="HVAC">HVAC</option>
+                            <option value="Interior Designer">Interior Designer</option>
+                            <option value="Landscaper">Landscaper</option>
+                            <option value="Mason">Mason</option>
+                            <option value="Plumber">Plumber</option>
+                            <option value="Roofer">Roofer</option>
+                        </select>
+                        <transition>
+                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.tradeErr}}</span>
+                        </transition> 
+                    </div>
+
+                    <div id="skill" class="flex text-gray-600 flex-col">
+                        <label for="skill" class="font-bold">Skill</label>
+                        <select 
+                            class="w-full border border-gray-300 p-1 rounded bg-transparent" 
+                            name="skill" 
+                            id="skill"
+                            v-model="user.skill"
+                            @input="validator"
+                        >
+                            <option value=""></option>
+                            <option value="No Experience">No Experience</option>
+                            <option value="Helper">Helper</option>
+                            <option value="Apprentice (1st Year)">Apprentice (1st Year)</option>
+                            <option value="Apprentice (2nd Year)">Apprentice (2nd Year)</option>
+                            <option value="Apprentice (3rd Year)">Apprentice (3rd Year)</option>
+                            <option value="Apprentice (4th Year)">Apprentice (4th Year)</option>
+                            <option value="Journeyman">Journeyman</option>
+                            <option value="Master">Master</option>
+                        </select>
+                        <span class="text-red-600" v-if="displayErrors">{{fieldErrors.skillErr}}</span>
+                    </div>
+
+                    <div id="work_province" class="flex-1 text-gray-600">
+                        <label class="font-bold" for="province">Looking to work in?</label>
+                        <select
+                            class="w-full border border-gray-300 p-1 rounded bg-transparent"
+                            name="work_province"
+                            id="province"
+                            v-model="user.work_province"
+                            @input="validator"
+                        >
+                        <option value=""></option>
+                        <option value="Balochistan">Balochistan</option>
+                        <option value="Khyber Pakhtunkhwa">
+                            Khyber Pakhtunkhwa
+                        </option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Sindh">Sindh</option>
+                        <option value="Islamabad Capital Territory">
+                            Islamabad Capital Territory
+                        </option>
+                        </select>
+                        <transition>
+                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.workProvinceErr}}</span>
+                        </transition>
+                    </div>
+                </div>
+
+                {# <div id="password-form" v-model="password" class="w-full grid gap-2 lg:grid-cols-2 text-gray-600 grid-cols-1 mb-3">
+                    <div id="password">
+                        <label for="password" class="font-bold">Password</label>
+                        <input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Enter your password"
+                        v-model="user.password"
+                        @input="validator"
+                        class="w-full border border-gray-300 p-1 rounded bg-transparent" 
+                        />
+                        <transition>
+                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.passwordErr}}</span>
+                        </transition>
+                    </div>
+                    <div id="confirm-password">
+                        <label for="password" class="font-bold">Confirm Password</label>
+                        <input 
+                        type="password" 
+                        name="cpassword" 
+                        placeholder="Enter your password again"
+                        v-model="cpassword"
+                        @input="validator" 
+                        autocomplete="password-new"
+                        class="w-full border border-gray-300 p-1 rounded bg-transparent" id="password"
+                        />
+                        <transition>
+                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.cpasswordErr}}</span>
+                        </transition>
+                    </div>
+                </div> #}
+
+                {# <div id="picture" class="text-gray-600 w-full mb-4">
+                    <span class="font-bold">
+                        Choose a picture
+                    </span>
+                    <input 
+                        type="file" 
+                        name="profilePic"
+                        @change="validator" 
+                        accept="image/png, image/gif, image/jpeg, image/jpg">
+                    <transition>
+                        <span class="text-red-600" v-if="displayErrors">{{fieldErrors.imageErr}}</span>
+                    </transition>
+                </div> #}
+
+                {# <div id="rememberme"class="w-full flex text-xs justify-between mb-3">
+                    <div class="w-full flex text-xs mb-3">
+                        <input type="checkbox" name="" class="mr-1" id="remember-me" />
+                        <label for="remember-me">Remember me</label>
+                    </div>
+                </div> #}
+
+                <input
+                    type="submit"
+                    class="w-full shadow-md p-2 bg-violet-500 text-white font-semibold rounded hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+                    value="Let's go"
+                /> 
+            </form>
+        </section>
+
+        
+        {# <section class="xl:w-96 lg:w-1/2 md:w-full lg:pt-8 h-fit flex flex-col lg:flex-row items-center justify-center">
+            <div class="hidden lg:block">
+                <div id="vertical-line" class="h-48 border-l border-gray-200"></div>
+                <span class="relative right-2 font-medium text-gray-900 text-left dark:text-white dark:bg-gray-900"> or </span>
+                <div id="vertical-line" class="h-48 border-l border-gray-200"></div>
+            </div>
+            <div class="inline-flex items-center lg:hidden justify-center w-full">
+                <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                <span class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 left-1/2 dark:text-white dark:bg-gray-900">or</span>
+            </div>
+
+            <div class="w-full text-sm lg:text-base flex flex-col items-center">
+                <a href="facebook/login" class="shadow-md w-full lg:w-3/4 flex p-2 bg-violet-500 h-10 text-white font-semibold rounded mb-3 items-center justify-center hover:bg-violet-600 active:bg-violet-700 focus:outline-none focus:ring focus:ring-violet-300"
+                    >
+                    <?php require __DIR__ . '/../../public/assets/images/facebook.svg' ?>
+                    <span>Sign In with Facebook</span>
+                </a>
+                <a href="google/login" class="shadow-md w-full lg:w-3/4 flex p-2 bg-red-500 h-10 text-white font-bold rounded mb-3 flex items-center justify-center hover:bg-red-600 active:bg-red-700 focus:outline-none focus:ring focus:ring-red-300"
+                >
+                    <?php require __DIR__ . '/../../public/assets/images/google.svg' ?>
+                    <span>Sign In with Google</span>
+                </a>
+            </div>
+        </section> #}
+    </main>
+    <sidebar class="hidden lg:block w-2/5 2xl:w-1/5 bg-cover scale-x-[-1] bg-norepeat" style="background-image: url(./../public/assets/images/additional-details-page-sidebar.jpg);">
+        
+    </sidebar>
+</div>
+{% endblock %}
+{% block script %}
+<script src="public/assets/signup.js" type="module"></script>
+{% endblock %}

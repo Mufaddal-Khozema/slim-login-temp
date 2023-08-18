@@ -4,8 +4,8 @@ Vue.createApp({
     data() {
         return {
             user: {
-                name: '',
-                lname: '',                
+                first_name: '',
+                last_name: '',                
                 email: '',
                 mobileno: '',
                 street_address: '',
@@ -21,7 +21,6 @@ Vue.createApp({
             cpassword: '',
             err: '',
             displayErrors: false,
-            
             fieldErrors: {
                 nameErr: 'Name is required',
                 lnameErr: 'Last Name is required',
@@ -42,14 +41,11 @@ Vue.createApp({
     },
     methods: {
         async createUser() {
-            console.log('running');
             if(this.isErrors(this.fieldErrors)){
-                console.log('path 1', this.displayErrors);
                 this.displayErrors = true;
                 return
             }
-            if(this.password !== this.cpassword){
-                console.log('path 2');
+            if(this.user.password !== this.cpassword){
                 this.err = "Passwords do not match"
                 return
             }
@@ -57,7 +53,7 @@ Vue.createApp({
             const formData = new FormData();
             formData.append("user", JSON.stringify(this.user));
             formData.append("profile_picture", this.profilePic);
-            const res = await fetch('createUser', {
+            const res = await fetch('signup', {
                 method: 'POST',
                 body: formData
             })

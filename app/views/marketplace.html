@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <nav class=" w-full text-gray-900 border-b-2 bg-transparent h-16 p-2 flex justify-between">
+        <div class="flex h-full items-center">
+            {% include "public/assets/images/logo-dark.svg" %}
+            <span class="hidden sm:flex font-serif ml-3 h-full flex md:text-lg items-center text-center">Smart Contractor</span>
+        </div>
+        <div class="w-1/2 flex">
+            <input class="border-2 border-gray-900 px-2 w-full" type="text" name="" placeholder="Find contractwork" id="">
+            <button class="bg-gray-900 px-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                  </svg>
+            </button>
+        </div>
+          <div class="h-full inline flex items-center justify-center">
+            <!-- <a class="mr-3" href="register.html" >Register</a>
+            <button class="p-1 px-3 mr-3 rounded shadow-md bg-violet-600 hover:bg-violet-700 active:bg-violet-800 focus:outline-none focus:ring focus:ring-gray-300">Login</button>
+            <div class="flex gap-x-2"> -->
+                <div class="relative pt-2">
+                    <span><strong>Mufaddal Khozema</strong></span>
+                    <div class="flex relative bottom-1 w-full items-right gap-x-1 justify-items-end">
+                        <span class="text-xs ml-auto">Active</span>
+                        <div class="inline self-center h-2 w-2 flex align-items justify-center rounded-3xl bg-green-300"></div>
+                    </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-10 h-10">
+                    <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+                  </svg>
+            </div>
+          </div>
+    </nav>
+    <main class="h-screen flex">
+        <aside class="w-1/4 border-r-2 h-full"></aside>
+        <section class="w-full h-full">
+            <div id="filter-results" class="h-10 w-full border-b"></div>
+            <div id="results" class="h-full w-full p-5">
+                <div id="result" class="w-full border shadow-sm hover:bg-gray-50">
+                    <div id="info" class="text-sm">
+                        <h3 class="font-bold">Jhon Doe</h3>
+                        <p class="text-xs text-gray-400">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nihil tenetur est veritatis. Corrupti nobis odio quae deleniti similique quis laudantium provident voluptatem sed ipsa at officia eius modi, illum nostrum!</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

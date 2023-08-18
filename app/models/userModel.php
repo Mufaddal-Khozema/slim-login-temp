@@ -1,28 +1,34 @@
 <?php 
 namespace App\Models;
+
+use GuzzleHttp\Psr7\UploadedFile;
+use Slim\Psr7\UploadedFile as Psr7UploadedFile;
+
+\Model::$short_table_names = true;
+
 class UserModel {
-    public function createUser(string $email, string $password) 
+    public function createUser(array $user, UploadedFile|string $image) 
     {
-        \Model::$short_table_names = true;
-        $data = \Model::factory('App\Models\Users')->where("email", $email)->findMany();
+        $data = \Model::factory('App\Models\Users')->where("email", $user['email'])->findMany();
         if (!empty($data)){
-            throw new \Exception("Account Already Exists");
+            throw new \RuntimeException("Account Already Exists");
         }else {
-            $user = \Model::factory('App\Models\Users')->create();
-            $user->createUser($email, $password);
-            $user->save();
+            $newUser = \Model::factory('App\Models\Users')->create();
+            $newUser->createUser($user, $image);
+            $newUser->save();
+            return md5($newUser->id);
         }
     }
 
     public function loginUser(string $email, string $password)
     {
-        $data = \Model::factory('App\Models\Users')->where('email', $email)->findOne();
-        if (empty($data)){
+        $user = \Model::factory('App\Models\Users')->where('email', $email)->findOne();
+        if (empty($user)){
             throw new \Exception("Account Does not Exist");
-        }else {
-            if(!password_verify($password, $data->password)){
-                throw new \Exception("Incorrect Password");
-            }
         }
+        if(!password_verify($password, $user->password)){
+            throw new \Exception("Incorrect Password");
+        }
+        return md5($user->id);
     }
 }
