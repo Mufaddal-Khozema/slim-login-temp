@@ -15,7 +15,7 @@
             
             <form @input="displayErrors = false" @submit.prevent="createUser" class="lg:w-3/4 w-full flex flex-col items-center gap-y-2 text-sm justify-center" method="post">
                 
-                <span v-if="err" class="w-full p-2 bg-red-600 bg-opacity-25 text-yellow-800 text-white rounded mb-3">{{err}}</span>
+                <span v-if="err" class="w-full p-2 bg-red-600 bg-opacity-25 text-yellow-800 text-white rounded mb-3">{% verbatim %}{{err}}{% endverbatim %}</span>
                 <div id="name" class="w-full mb-3">
                     <label for="first-name" class="text-gray-600 font-bold">Name</label>
                     <div class="grid grid-cols-2 gap-x-2 placeholder-gray-200">
@@ -38,10 +38,10 @@
                             @input="validator"
                         />
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.nameErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.nameErr}}{% endverbatim %}</span>
                         </transition>
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.lnameErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.lnameErr}}{% endverbatim %}</span>
                         </transition>
                     </div>
                 </div>
@@ -58,27 +58,29 @@
                             class="w-full border border-gray-300 p-1 rounded bg-transparent"
                             />
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.emailErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.emailErr}}{% endverbatim %}</span>
                         </transition>
                     </div>
                     <div id="mobileno" class="placeholder-gray-200 flex-1">
                         <label for="phone-number" class="text-gray-600 font-bold">Mobile Phone</label>
-                        <div class="w-full flex border border-gray-300 p-1 rounded bg-transparent">
-                        <label class="px-1" for="phoneNumber">
-                        +92
-                        </label>
-                        <input
-                            id="mobileno"
-                            name="mobileno"
-                            type="text"
-                            class="flex-grow bg-transparent focus:outline-none"
-                            placeholder="Phone Number"
-                            v-model="user.mobileno"
-                            @input="validator"
-                            />
-                        </div>
+                        <fieldset class="w-full flex focus:border-2 focus:border-black border border-gray-300 p-1 rounded bg-transparent" :class="{'border-2 border-black': isArtificiallyFocused}">
+                            <label class="px-1" for="phoneNumber">
+                            +92
+                            </label>
+                            <input
+                                id="mobileno"
+                                name="mobileno"
+                                type="text"
+                                class="flex-grow bg-transparent focus:outline-none"
+                                placeholder="Phone Number"
+                                @focus="isArtificiallyFocused=true"
+                                @blur="isArtificiallyFocused=false"
+                                v-model="user.mobileno"
+                                @input="validator"
+                                />
+                        </fieldset>
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.mobilenoErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.mobilenoErr}}{% endverbatim %}</span>
                         </transition>
                     </div>
                 </div>
@@ -98,7 +100,7 @@
                             @input="validator"
                             />
                             <transition>
-                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.streetAddErr}}</span>
+                                <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.streetAddErr}}{% endverbatim %}</span>
                             </transition>
                         </div> 
                         
@@ -114,7 +116,7 @@
                                 @input="validator"
                                 />
                             <transition>
-                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.cityErr}}</span>
+                                <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.cityErr}}{% endverbatim %}</span>
                             </transition>
                         </div>
 
@@ -139,7 +141,7 @@
                                 </option>
                             </select> 
                             <transition>
-                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.provinceErr}}</span>
+                                <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.provinceErr}}{% endverbatim %}</span>
                             </transition>
                         </div>
 
@@ -155,7 +157,7 @@
                             @input="validator"
                             />
                             <transtion>
-                                <span class="text-red-600" v-if="displayErrors">{{fieldErrors.zipCodeErr}}</span>
+                                <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.zipCodeErr}}{% endverbatim %}</span>
                             </transtion>
                         </div>
                     </div>
@@ -185,7 +187,7 @@
                             <option value="Roofer">Roofer</option>
                         </select>
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.tradeErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.tradeErr}}{% endverbatim %}</span>
                         </transition> 
                     </div>
 
@@ -208,7 +210,7 @@
                             <option value="Journeyman">Journeyman</option>
                             <option value="Master">Master</option>
                         </select>
-                        <span class="text-red-600" v-if="displayErrors">{{fieldErrors.skillErr}}</span>
+                        <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.skillErr}}{% endverbatim %}</span>
                     </div>
 
                     <div id="work_province" class="flex-1 text-gray-600">
@@ -232,7 +234,7 @@
                         </option>
                         </select>
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.workProvinceErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.workProvinceErr}}{% endverbatim %}</span>
                         </transition>
                     </div>
                 </div>
@@ -249,7 +251,7 @@
                         class="w-full border border-gray-300 p-1 rounded bg-transparent" 
                         />
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.passwordErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.passwordErr}}{% endverbatim %}</span>
                         </transition>
                     </div>
                     <div id="confirm-password">
@@ -264,7 +266,7 @@
                         class="w-full border border-gray-300 p-1 rounded bg-transparent" id="password"
                         />
                         <transition>
-                            <span class="text-red-600" v-if="displayErrors">{{fieldErrors.cpasswordErr}}</span>
+                            <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.cpasswordErr}}{% endverbatim %}</span>
                         </transition>
                     </div>
                 </div>
@@ -279,7 +281,7 @@
                         @change="validator" 
                         accept="image/png, image/gif, image/jpeg, image/jpg">
                     <transition>
-                        <span class="text-red-600" v-if="displayErrors">{{fieldErrors.imageErr}}</span>
+                        <span class="text-red-600" v-if="displayErrors">{% verbatim %}{{fieldErrors.imageErr}}{% endverbatim %}</span>
                     </transition>
                 </div>
 
@@ -326,5 +328,5 @@
 </div>
 {% endblock %}
 {% block script %}
-<script src="public/assets/signup.js" type="module"></script>
+<script src="public/assets/js/signup.js" type="module"></script>
 {% endblock %}
