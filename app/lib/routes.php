@@ -4,13 +4,17 @@ use Slim\App;
 use App\Controllers\PageController;
 use App\Controllers\UserController;
 use App\Middleware\AuthMiddleware;
+use App\Middleware\RedirectMiddleware;
+use Slim\Routing\RouteCollectorProxy;
 
 $app->setBasePath("/slim-login");
 
 return function (App $app) {
-    $app->get('/', [PageController::class, 'home']); 
-    $app->get('/login', [PageController::class, 'login']); 
-    $app->get('/signup', [PageController::class, 'signup']); 
+    $app->get('/', [PageController::class, 'home']);
+    $app->group('/', function (RouteCollectorProxy $group){
+        $group->get('login', [PageController::class, 'login']); 
+        $group->get('signup', [PageController::class, 'signup']); 
+    })->add(new RedirectMiddleware); 
     $app->get('/welcome', [PageController::class, 'welcome'])->add(new AuthMiddleware);
     // $app->get('/signup/additional', [PageController::class, 'signupAdditional']);
 
