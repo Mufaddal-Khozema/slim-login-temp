@@ -3,6 +3,7 @@ import {validator} from './script.js';
 Vue.createApp({
     data() {
         return {
+            isArtificiallyFocused: false,// for Artificail focus on mobileno field
             user: {
                 first_name: '',
                 last_name: '',                
@@ -19,8 +20,8 @@ Vue.createApp({
             },
             profilePic: '',
             cpassword: '',
-            err: '',
-            displayErrors: false,
+            err: '', // Main error, for backend responses
+            displayErrors: false, // Enables all errors
             fieldErrors: {
                 nameErr: 'Name is required',
                 lnameErr: 'Last Name is required',

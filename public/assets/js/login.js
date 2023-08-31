@@ -14,6 +14,7 @@ Vue.createApp({
     },
     methods: {
         async loginUser() {
+            console.log(this.fieldErrors);
             if(this.fieldErrors.emailErr || this.fieldErrors.passwordErr){
                 this.displayErr = true;
                 return;
